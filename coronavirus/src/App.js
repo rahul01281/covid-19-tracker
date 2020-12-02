@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { MenuItem, FormControl, Select, Menu } from "@material-ui/core";
+import { MenuItem, FormControl, Select } from "@material-ui/core";
 
 function App() {
 
   const [ countries, setCountries ] = useState([]);
-  
+  const [ country, setCountry] = useState("worldwide");
+
 
   useEffect(() => {
     const getCountriesData = async() => {
@@ -24,13 +25,20 @@ function App() {
     getCountriesData();
   }, []);
 
+  const onCountryChange = async (event) => {
+    const countryCode = event.target.value;
+
+    setCountry(countryCode);
+  }
+
 
   return (
     <div className="app">
       <div className="app__header">
         <h1>Covid-19 Tracker</h1>
-        <FormControl class="app__dropdown">
-          <Select variant="outlined" value="abc">
+        <FormControl className="app__dropdown">
+          <Select variant="outlined" value={country} onChange={onCountryChange}>
+            <MenuItem value="worldwide">Worldwide</MenuItem>
             {
               countries.map((country) => (
                 <MenuItem value={country.value} key={country.id} >{country.name}</MenuItem>
