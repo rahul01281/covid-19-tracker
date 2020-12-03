@@ -6,6 +6,7 @@ import Map from './Map';
 import Table from "./Table";
 import { sortData } from './util';
 import LineGraph from './LineGraph';
+import "leaflet/dist/leaflet.css";
 
 function App() {
 
@@ -47,8 +48,10 @@ function App() {
     await fetch(url).then(response => response.json()).then(data => {
       setCountry(countryCode);
       setCountryInfo(data);
+
     });
   };
+
 
   return (
     <div className="app">
@@ -72,16 +75,16 @@ function App() {
           <InfoBox title="Today Recovered" cases={countryInfo.todayRecovered} total={countryInfo.recovered} />
           <InfoBox title="Today Deaths" cases={countryInfo.todayDeaths} total={countryInfo.deaths} />
         </div>
-        <Map />
+        <Map center={{ lat: 20.5937, lng: 78.9629 }} zoom={3} />
       </div>
 
       <Card className="app__right">
         <CardContent>
           <h3>Live cases by Country</h3>
           <Table countries={tableData} />
-
           <h3>Worldwide new cases</h3>
           <LineGraph />
+          
         </CardContent>
       </Card>
       
